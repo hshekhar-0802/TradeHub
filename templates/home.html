@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap"
+      rel="stylesheet"
+    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TradeHub</title>
+    <link rel="icon" type="png" href="static/favicon.png" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 10px;
+        background-color: #000000;
+        color: white;
+      }
+      .header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #0e0e0e;
+      }
+      .top-bar {
+        position: absolute;
+        top: -10px;
+        left: 0;
+        right: 0;
+        height: 100px;
+        background-color: rgba(14, 14, 14, 14);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 20px 0;
+      }
+      .company-info {
+        display: flex;
+        align-items: center;
+      }
+      .company-name {
+        font-size: 32px;
+        font-weight: bold;
+        margin-left: 50px;
+      }
+      .tab-bar {
+        display: flex;
+        justify-content: center;
+        background-color: #0e0e0e;
+      }
+      .tab {
+        margin: 0 20px;
+        font-size: 18px;
+      }
+      .main-body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 100px;
+      }
+      .ex {
+        cursor: pointer;
+      }
+      .nav-link {
+        margin: 0 20px;
+        font-size: 18px;
+        text-decoration: none;
+        color: #ffffff;
+      }
+      .nav-link:hover {
+        color: #ff6b00;
+      }
+
+      .ex:hover {
+        color: #ff6b00;
+      }
+      .text {
+        font-size: 100px;
+        margin-left: 0px;
+        display: flex;
+        flex-direction: column;
+        color: #ffffff;
+        font-family: "PT Serif", serif;
+      }
+      .text p {
+        margin: 0px 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="header">
+      <div class="top-bar">
+        <a href="support.html" class="nav-link">Support Portal</a>
+        <img src="static/logo.jpg" alt="Logo" width="320" height="100" />
+        <div class="top-bar-links">
+          <a href="about.html" class="nav-link">About</a>
+          <a href="/signin" class="nav-link">Sign In</a>
+          <a href="/signup" class="nav-link">Sign Up</a>
+        </div>
+      </div>
+    </div>
+    <div class="main-body">
+      <img src="static/phone.jpg" alt="Phone Image" width="750" height="750" />
+      <div class="text">
+        <p>Trading</p>
+        <p>now at</p>
+        <p>your Fingertips</p>
+      </div>
+    </div>
+  </body>
+</html>

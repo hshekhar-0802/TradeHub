@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script
+      src="https://cdn.bokeh.org/bokeh/release/bokeh-3.3.4.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-3.3.4.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-3.3.4.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.bokeh.org/bokeh/release/bokeh-gl-3.3.4.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-3.3.4.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Stock and Date Selection Form</title>
+    <link rel="icon" type="png" href="static/favicon.png" />
+
+    <style>
+          .submit-button {
+            background-color: #f7971e ;
+            color: #000000;
+            width: 220px;
+            margin-left: 0px;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+          }
+          .submit-button:hover{
+            background-color : #f57f06;
+          }
+
+          .button {
+            width: 150px;
+            height: 55px;
+            background-color: #f7971e;
+            color: #000000;
+            padding: 10px;
+            border: none;
+            cursor: pointer; 
+            border-radius: 5px;
+            margin-bottom: 10px;
+            margin-right: 10px;
+          }
+          .button:hover{
+            background-color : #f57f06;
+          }
+
+          body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color:   #000000;
+            color: white;
+          }
+          .main-container {
+            display: flex;
+            position: relative;
+          }
+          .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #0e0e0e;
+          }
+          .company-info {
+            display: flex;
+            align-items: center;
+          }
+          .company-name {
+            font-size: 32px;
+            font-weight: bold;
+            margin-left: 50px;
+          }
+          .dashboard-title {
+            font-size: 28px;
+            text-align: center;
+            margin-top: 20px;
+            font-family: "Libre Franklin", sans-serif;
+
+          }
+          .tab-bar {
+            display: flex;
+            justify-content: center;
+            background-color: #0e0e0e;
+            padding: 10px 0;
+          }
+          .tab {
+            margin: 0 20px;
+            font-size: 18px;
+          }
+          .main-body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 100px;
+          }
+          .ex{
+            cursor: pointer;
+          }
+          .ex:hover{
+            color: #ff6b00
+          }
+          .current{
+            color: #ff6b00
+          }
+          .ex:hover{
+            color: #ff6b00
+          }
+          .text {
+              font-size: 100px; 
+              margin-left: 0px; 
+              display: flex;
+              flex-direction: column;
+              color: #FFFFFF;
+              font-family: 'PT Serif', serif;
+          }
+          .text p {
+            margin: 0px 0; 
+        }
+
+
+
+        a{
+          color: inherit; 
+          text-decoration: none;
+        }
+
+
+        .stock-name {
+            position: absolute; 
+            top: 125px; 
+            left: 310px;
+        }
+
+        .company {
+            position: absolute;
+            top: 195px;
+            left: 310px;
+        }
+
+        .price {
+            position: absolute;
+            top: 130px;
+            right: 30px;
+        }
+
+        .change{
+            position: absolute;
+            top: 205px;
+            right: 30px;
+            color: {{color}};
+        }
+
+        .container {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            margin-top : 120px;
+            width: 230px;
+            background-color: #0f0000;
+            padding: 20px;
+            height: 550px; 
+            overflow-y: auto; 
+        }
+
+        .box {
+            position : absolute
+            top: 105px;
+            width: 150px;
+            height: 45px;
+            background-color: #f7971e;
+            border: 1px solid #000000;
+            margin: 10px;
+            padding: 20px;
+            color: #000000; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 10px;
+            font-size: 20px;
+            color: black;
+            text-decoration: none;
+        }
+        .box:hover{
+            background-color: #f57f06
+        }
+
+        .time-frames {
+            display: flex;
+            position: absolute;
+            top: 235px;
+            left: 610px;
+        }
+        .time-frames.hover{
+            color: #000000;
+        }
+
+        .time-frame-box {
+          border-radius: 10px;
+            width: 60px;
+            color: #000000;
+            height: 30px;
+            background-color: #f7971e;
+            border: 1px solid #000000;
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 12px;
+            text-decoration: none;
+            color: black;
+
+
+        }
+        .time-frame-box:hover{
+            background-color :#f57f06
+        }
+
+        .information {
+          display: flex;
+          position: absolute;
+          top: 335px;
+          left: 310px;
+      }
+      .a{
+        text-decoration: none;
+      }
+          .leftbar {
+          position: absolute;
+          display: flex;
+          flex-direction: column;
+          width: 230px;
+          color: #000000;
+          background-color: #f7971e;
+          padding: 20px;
+          height: 93vh;
+          overflow-y: auto;
+        }
+        .graph-container {
+          padding: 20px;
+          margin-left: 650px;
+          margin-top: 150px;
+          border-radius: 10px;
+        }
+        .button-container {
+          display: flex;
+          margin-left: 30px;
+          margin-top: 105px;
+          flex-direction: column;
+          position: absolute;
+          top: 60px;
+          left: 310px;
+          max-width: 110px;
+        }
+    </style>
+    <script>
+      function sendData(box) {
+        box.classList.toggle("box-shadow");
+      }
+    </script>
+  </head>
+  <body>
+    <div class="header">
+      <div class="company-info">
+        <img
+          src="{{ url_for('static', filename='logo.jpg') }}"
+          alt="Company Logo"
+          width="320"
+          height="100">
+      </div>
+      <div class="tab-bar">
+        <div class="tab ex">Home</div>
+        <a href="/accDetails"><div class="tab ex">Account Details</div></a>
+        <a href="/filters"><div class="tab ex">Filters</div></a>
+        <a href="/allstocks/SBIN/1Y"><div class="tab ex">All stocks</div></a>
+        <a href="/compare/OPEN"
+          ><div class="tab ex current">Compare Stocks</div></a
+        >
+        <a href="/logout"
+          ><div class="tab ex"><a href="/logout">Logout</a></div></a
+        >
+      </div>
+    </div>
+    <div class="main-container">
+      <div
+        class="graph-container"
+        style="margin-left: 530px; margin-top: 120px"
+      >
+        {{ div | safe }}
+      </div>
+      <div class="button-container">
+        <a href="/compare/OPEN"><button class="button">OPEN</button></a>
+        <a href="/compare/CLOSE"><button class="button">CLOSE</button></a>
+        <a href="/compare/HIGH"><button class="button">HIGH</button></a>
+        <a href="/compare/LOW"><button class="button">LOW</button></a>
+        <a href="/compare/LTP"><button class="button">LTP</button></a>
+        <a href="/compare/VOLUME"><button class="button">VOLUME</button></a>
+        <a href="/compare/VALUE"><button class="button">VALUE</button></a>
+        <a href="/compare/NO OF TRADES"
+          ><button class="button">NO OF TRADES</button></a
+        >
+      </div>
+      <div class="container">
+        <form method="POST" action="/compare/{{parameter}}">
+          <fieldset>
+            <legend>Select Stocks:</legend>
+            {% for stock in stocks %}
+            <label>
+              <input type="checkbox" name="stocks" value="{{ stock }}" />
+              {{ stock }} </label
+            ><br />
+            {% endfor %}
+          </fieldset>
+          <br />
+          <label for="from_date">From Date:</label>
+          <input type="date" name="from_date" id="from_date" />
+          <br /><br />
+          <label for="to_date">To Date:</label>
+          <input type="date" name="to_date" id="to_date" />
+          <br /><br />
+          <input type="submit" class="submit-button" value="Submit" />
+        </form>
+      </div>
+    </div>
+    {{script|safe}}
+  </body>
+</html>

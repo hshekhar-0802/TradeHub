@@ -1,0 +1,266 @@
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;700&display=swap"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Filters</title>
+    <link rel="icon" type="png" href="static/favicon.png" />
+
+    <style>
+      .filter-form {
+          float: right;
+          margin-right: 20px;
+      }
+      body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          background-color:   #000000;
+          color: white;
+          overflow: hidden;
+        }
+        .header {
+          position: fixed;
+          top: 0;
+          width: 100%;
+          z-index: 1000;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 10px 20px;
+          background-color: #0e0e0e;
+        }
+        .company-info {
+          display: flex;
+          align-items: center;
+        }
+        .company-name {
+          font-size: 32px;
+          font-weight: bold;
+          margin-left: 50px;
+        }
+        .dashboard-title {
+          font-size: 28px;
+          text-align: center;
+          margin-top: 20px;
+          font-family: "Libre Franklin", sans-serif;
+
+        }
+        .tab-bar {
+          display: flex;
+          justify-content: center;
+          background-color: #0e0e0e;
+          padding: 10px 0;
+        }
+        .tab {
+          margin: 0 20px;
+          font-size: 18px;
+        }
+        .main-body {
+          display: flex;
+          align-items: center;
+          justify-content: left;
+          margin-top: 120px;
+        }
+        .main-container {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 100px;
+          margin-left: 0px;
+      }
+      .filter-container {
+          width: calc(30% - 100px);
+          margin-top: 10px;
+          margin-left: 10px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          height: calc(100vh - 120px);
+           overflow-y: auto;
+           padding-right: 0px;
+      }
+      .filter-form {
+          margin-left: 10px;
+          margin-bottom: 100px;
+      }
+      .filter-form label {
+          display: block;
+          margin-bottom: 10px;
+          margin-left: 0px;
+      }
+      .filter-form input[type="number"] {
+          width: 100%;
+          padding: 10px;
+          margin-bottom: 10px;
+      }
+      .filter-form input[type="submit"] {
+          width: 100%;
+          padding: 20px;
+          background-color: #f7971e;
+          color: white;
+          border: none;
+          cursor: pointer;
+          hover: color:#f57f06;
+      }
+      .filter-form input[type="submit"]:hover {
+          background-color:#f57f06;
+      }
+      .table-container {
+          width: calc(100% - 100px);
+          margin-top: 10px;
+          margin-right: 10px;
+          margin-left: 80px;
+          overflow-x: auto;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          height: calc(100vh - 120px);
+           overflow-y: auto;
+           padding-right: 0px;
+      }
+      .data-frame-table {
+          width: 100%;
+          border-collapse: collapse;
+          overflow-y: auto;
+      }
+      .data-frame-table th, .data-frame-table td {
+          border: 2px solid #ddd;
+          padding: 20px;
+          text-align: left;
+          width: calc(100% / 7);
+      }
+      .data-frame-table th {
+          background-color: #f57f06;
+          color: white;
+      }
+      .data-frame-table tr:nth-child(odd) {
+          background-color: #0e0e0e;
+          color: #ffffff;
+      }
+
+      .data-frame-table tr:nth-child(even) {
+          background-color: #f7971e;
+          color: #000000
+      }
+        .ex{
+          cursor: pointer;
+        }
+        .current{
+          color: #ff6b00
+        }
+        .ex:hover{
+          color: #ff6b00
+        }
+        .text {
+            font-size: 100px;
+            margin-left: 0px;
+            display: flex;
+            flex-direction: column;
+            color: #FFFFFF;
+            font-family: 'PT Serif', serif;
+        }
+        .text p {
+          margin: 0px 0;
+      }
+      .table-container h2 {
+          font-size: 30px;
+          text-align: center;
+      }
+
+      a{
+        color: inherit;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="header">
+      <div class="company-info">
+        <img
+          src="{{ url_for('static', filename='logo.jpg') }}"
+          alt="Company Logo"
+          width="320"
+          height="100"
+        />
+      </div>
+      <div class="tab-bar">
+        <div class="tab ex">Home</div>
+        <a href="/accDetails"><div class="tab ex">Account Details</div></a>
+        <a href="/filters"><div class="tab ex current">Filters</div></a>
+        <a href="/allstocks/SBIN/1Y"><div class="tab ex">All stocks</div></a>
+        <a href="/compare/OPEN"><div class="tab ex">Compare Stocks</div></a>
+        <div class="tab ex"><a href="/logout">Logout</a></div>
+      </div>
+    </div>
+
+    <div class="main-container">
+      <div class="filter-container">
+        <h2>Stock Data Filters</h2>
+        <div class="filter-form">
+          <form method="POST" action="{{ url_for('filters') }}">
+            <label for="openhigh">Open Max:</label>
+            <input type="number" name="openhigh" id="openhigh" step="50" />
+            <label for="openlow">Open Min:</label>
+            <input type="number" name="openlow" id="openlow" step="50" />
+
+            <label for="wkhighhigh">52 Week High Max:</label>
+            <input type="number" name="wkhighhigh" id="wkhighhigh" step="50" />
+            <label for="wkhighlow">52 Week High Min:</label>
+            <input type="number" name="wkhighlow" id="wkhighlow" step="50" />
+
+            <label for="wklowhigh">52 Week Low Max:</label>
+            <input type="number" name="wklowhigh" id="wklowhigh" step="50" />
+            <label for="wklowlow">52 Week Low Min:</label>
+            <input type="number" name="wklowlow" id="wklowlow" step="50" />
+
+            <label for="ltphigh">LTP Max:</label>
+            <input type="number" name="ltphigh" id="ltphigh" step="50" />
+            <label for="ltplow">LTP Min:</label>
+            <input type="number" name="ltplow" id="ltplow" step="50" />
+
+            <label for="mktcaphigh">Market Capital Max:</label>
+            <input
+              type="number"
+              name="mktcaphigh"
+              id="mktcaphigh"
+              step="500000"
+            />
+            <label for="mktcaplow">Market Capital Min:</label>
+            <input
+              type="number"
+              name="mktcaplow"
+              id="mktcaplow"
+              step="500000"
+            />
+
+            <label for="pehigh">PE Ratio Max:</label>
+            <input type="number" name="pehigh" id="mktcaphigh" step="1" />
+            <label for="pelow">PE Ratio Min:</label>
+            <input type="number" name="pelow" id="mktcaplow" step="1" />
+
+            <input type="submit" value="Apply Filters" />
+          </form>
+        </div>
+      </div>
+      <div class="table-container">
+        <h2>Stock Data</h2>
+        <div class="data-frame-table">{{ table|safe }}</div>
+      </div>
+    </div>
+
+    <div class="filter-form">
+      <form method="POST" action="{{ url_for('filters') }}"></form>
+    </div>
+  </body>
+</html>

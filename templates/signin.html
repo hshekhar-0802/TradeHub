@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In</title>
+  <link rel="icon" type="png" href="static/favicon.png">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 10px;
+      background-color:#000000; 
+      color: white;
+    }
+    .header {
+      position: fixed;
+      top: 0;
+      width: 100%; 
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #0e0e0e; 
+    }
+    .top-bar {
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: 0;
+      height: 100px;
+      background-color: rgba(14,14,14, 14);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 20px 0;
+    }
+    .company-info {
+      display: flex;
+      align-items: center;
+    }
+    .company-name {
+      font-size: 32px; 
+      font-weight: bold;
+      margin-left: 50px;
+    }
+    .tab-bar {
+      display: flex;
+      justify-content: left;
+      background-color: #0e0e0e;
+    }
+    .tab {
+      margin: 0 0px;
+      font-size: 18px;
+    }
+    .main-body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 255px;
+    }
+    #video-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      z-index: -1;
+    }
+    .ex{
+      cursor: pointer;
+    }
+    .nav-link{
+      margin: 0 20px;
+      font-size: 18px;
+      text-decoration: none;
+      color: #ffffff
+    }
+    .nav-link:hover{
+      color: #ff6b00
+    }
+    .curr{
+      background-color: #21242a
+    }
+    .ex:hover{
+      color: #ff6b00
+    }
+    .text {
+        font-size: 100px; 
+        margin-left: 0px;
+        display: flex;
+        flex-direction: column;
+        color: #FFFFFF;
+        font-family: 'PT Serif', serif;
+    }
+    .text p {
+      margin: 0px 0;
+    }
+    .container {
+      background-color: #0e0e0e;
+      border-radius: 15px;
+      box-shadow: 5px 5px 10px rgba(31,31,31, 10);
+      padding: 30px;
+      width: 550px;
+      margin-top: 150px
+      z-index: 1;
+    }
+    .container button {
+      color: black;
+    }
+    h2 {
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin: 0px 0 0px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #f7971e;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #f57f06;   
+    }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.body.classList.add('loaded');
+    });
+  </script>
+</head>
+
+<body>
+  <video autoplay muted loop id="video-bg">
+    <source src="/static/backgroundVideo.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <div class="header">
+    <div class="top-bar">
+      <a href="support.html" class="nav-link">Support Portal</a>
+      <img src="static/logo.jpg" alt="Logo" width="320" height="100">
+      <div class="top-bar-links">
+        <a href="about.html" class="nav-link">About</a>
+        <a href="/signin" class="nav-link">Sign In</a>
+        <a href="/signup" class="nav-link">Sign Up</a>
+      </div>
+    </div>
+  </div>
+  <div class="main-body">
+    <div class="container">
+      <h2>Sign In</h2>
+      <form method="POST" action="/signin">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Sign In</button>
+        <p>
+          <p>New User? <a href="http://127.0.0.1:5000/signup">Sign Up</a></p>
+        </p>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

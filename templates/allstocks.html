@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script
+      src="https://cdn.bokeh.org/bokeh/release/bokeh-3.3.4.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-3.3.4.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-3.3.4.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.bokeh.org/bokeh/release/bokeh-gl-3.3.4.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-3.3.4.min.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <title>Stock Information</title>
+    <link rel="favicon" type="png" href="static/favicon.png" />
+
+    <style>
+      body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color:   #000000;
+            color: white;
+      }
+
+      .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #0e0e0e;
+      }
+
+      .company-info {
+            display: flex;
+            align-items: center;
+      }
+
+      .company-name {
+            font-size: 32px;
+            font-weight: bold;
+            margin-left: 50px;
+          }
+          .dashboard-title {
+            font-size: 28px;
+            text-align: center;
+            margin-top: 20px;
+            font-family: "Libre Franklin", sans-serif;
+
+          }
+          .tab-bar {
+            display: flex;
+            justify-content: center;
+            background-color: #0e0e0e;
+            padding: 10px 0;
+          }
+          .tab {
+            margin: 0 20px;
+            font-size: 18px;
+          }
+          .main-body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 100px;
+          }
+          .ex{
+            cursor: pointer;
+          }
+          .ex:hover{
+            color: #ff6b00
+          }
+          .current{
+            color: #ff6b00
+          }
+          .ex:hover{
+            color: #ff6b00
+          }
+          .text {
+              font-size: 100px;
+              margin-left: 0px;
+              display: flex;
+              flex-direction: column;
+              color: #FFFFFF;
+              font-family: 'PT Serif', serif;
+          }
+          .text p {
+            margin: 0px 0;
+        }
+        .business-news {
+          margin-top: 20px;
+        }
+
+
+
+        a{
+          color: inherit;
+          text-decoration: none;
+        }
+
+
+        .main-container {
+            display: flex;
+            position: relative;
+        }
+
+        .graph-container {
+            padding: 20px;
+            margin-left: 650px;
+            margin-top: 150px;
+            border-radius: 10px;
+        }
+
+        .stock-name {
+            position: absolute;
+            top: 125px;
+            left: 310px;
+        }
+
+        .company {
+            position: absolute;
+            top: 195px;
+            left: 310px;
+        }
+
+        .price {
+            position: absolute;
+            top: 130px;
+            right: 30px;
+        }
+
+        .change{
+            position: absolute;
+            top: 205px;
+            right: 30px;
+            color: {{color}};
+        }
+
+        .container {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            width: 230px;
+            background-color: #000000;
+            padding: 20px;
+            height: 93vh;
+            overflow-y: auto;
+        }
+
+        .box {
+            position : absolute
+            top: 105px;
+            width: 150px;
+            height: 45px;
+            background-color: #f7971e;
+            border: 1px solid #000000;
+            margin: 10px;
+            padding: 20px;
+            color: #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 10px;
+            font-size: 20px;
+            color: black;
+            text-decoration: none;
+        }
+        .box:hover{
+            background-color: #f57f06
+        }
+
+        .time-frames {
+            display: flex;
+            position: absolute;
+            top: 235px;
+            left: 610px;
+        }
+        .time-frames.hover{
+            color: #000000;
+        }
+
+        .time-frame-box {
+          border-radius: 10px;
+            width: 60px;
+            color: #000000;
+            height: 30px;
+            background-color: #f7971e;
+            border: 1px solid #000000;
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 12px;
+            text-decoration: none;
+            color: black;
+
+
+        }
+        .time-frame-box:hover{
+            background-color :#f57f06
+        }
+
+        .information {
+          display: flex;
+          position: absolute;
+          top: 335px;
+          left: 310px;
+      }
+      .a{
+        text-decoration: none;
+      }
+    </style>
+    <script>
+      function sendData(box) {
+        box.classList.toggle("box-shadow");
+      }
+    </script>
+  </head>
+  <body>
+    <div class="header">
+      <div class="company-info">
+        <img
+          src="{{ url_for('static', filename='logo.jpg') }}"
+          alt="Company Logo"
+          width="320"
+          height="100"
+        />
+      </div>
+      <div class="tab-bar">
+        <div class="tab ex">Home</div>
+        <a href="/accDetails"><div class="tab ex">Account Details</div></a>
+        <a href="/filters"><div class="tab ex">Filters</div></a>
+        <a href="/allstocks/SBIN/1Y"
+          ><div class="tab ex current">All stocks</div></a
+        >
+        <a href="/compare/OPEN"><div class="tab ex">Compare Stocks</div></a>
+        <a href="/logout"
+          ><div class="tab ex"><a href="/logout">Logout</a></div></a
+        >
+      </div>
+    </div>
+    <div class="main-container">
+      <div
+        class="graph-container"
+        style="margin-left: 530px; margin-top: 260px"
+      >
+        {{ div | safe }}
+      </div>
+      <div class="stock-name" style="font-size: 60px">{{ def_symbol}}</div>
+      <div class="company" style="font-size: 30px">{{company}}</div>
+      <div class="price" style="font-size: 70px">₹ {{live}}</div>
+      <div class="change" style="font-size: 30px">{{sign}} {{change}}%</div>
+      <div class="container">
+        <a
+          href="/allstocks/SBIN/1Y"
+          style="text-decoration: none; color: black"
+        >
+          <div class="box">SBIN</div></a
+        >
+        {% for symbol in stock_symbols %}
+        <a href="/allstocks/{{symbol}}/1Y"
+          ><div class="box">{{ symbol }}</div></a
+        >
+        {% endfor %}
+      </div>
+      <div class="time-frames">
+        <a href="/allstocks/{{def_symbol}}/20Y"
+          ><div class="time-frame-box">20Y</div></a
+        >
+        <a href="/allstocks/{{def_symbol}}/10Y"
+          ><div class="time-frame-box">10Y</div></a
+        >
+        <a href="/allstocks/{{def_symbol}}/5Y"
+          ><div class="time-frame-box">5Y</div></a
+        >
+        <a href="/allstocks/{{def_symbol}}/1Y"
+          ><div class="time-frame-box">1Y</div></a
+        >
+        <a href="/allstocks/{{def_symbol}}/6M"
+          ><div class="time-frame-box">6M</div></a
+        >
+        <a href="/allstocks/{{def_symbol}}/3M"
+          ><div class="time-frame-box">3M</div></a
+        >
+        <a href="/allstocks/{{def_symbol}}/1M"
+          ><div class="time-frame-box">1M</div></a
+        >
+        <a href="/allstocks/{{def_symbol}}/1W"
+          ><div class="time-frame-box">1W</div></a
+        >
+        <a href="/allstocks/{{def_symbol}}/1D"
+          ><div class="time-frame-box">1D</div></a
+        >
+        <a href="/allstocks/{{def_symbol}}/All"
+          ><div class="time-frame-box">All</div></a>
+        </div>
+        <div class="information">Open: {{open}}<br /><br />
+        High: {{high}}<br /><br />
+        Low: {{low}}<br /><br />
+        Vol: {{volume}}<br /><br />
+        P/E: {{pe}}<br /><br />
+        Mkt Cap: {{mktcap}}<br /><br />
+        52 wk high: {{wkhigh}}<br /><br />
+        52 wk low: {{wklow}}<br /><br />
+      </div>
+    </div>
+    {{ script | safe }}
+  </body>
+</html>
