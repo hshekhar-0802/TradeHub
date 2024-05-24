@@ -43,4 +43,4 @@ The ”Filter Stocks” option on the dashboard directs users to a dedicated web
 
 ![](Images/Aspose.Words.f95a8d61-bae0-447d-add3-4be395595d6b.009.png)
 
-[ref1]: Aspose.Words.f95a8d61-bae0-447d-add3-4be395595d6b.003.png
+[ref1]: Images/Aspose.Words.f95a8d61-bae0-447d-add3-4be395595d6b.003.png
